@@ -37,17 +37,20 @@ const swaggerDefinition  = {
     }
  }
 
+ const isProduction = process.env.NODE_ENV === 'production';
+ const apisPath = isProduction ? 'dist/Presentation/**/*.routes.js' : 'src/Presentation/**/*.routes.ts';
+  
 const options = {
   swaggerDefinition,
-  apis: [path.resolve(__dirname, '../Presentation/**/*.routes.ts')],
+  apis: [apisPath],
 };
 
 const swaggerSpec = swaggerJsDoc(options)
 
 export function setupSwagger(app: Express) {
-  if (process.env.NODE_ENV !== 'production') {
+  //if (process.env.NODE_ENV !== 'production') {
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
-  }
+  //}
 }
 
 // apis: [

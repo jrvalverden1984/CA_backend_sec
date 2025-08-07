@@ -12,16 +12,17 @@ export class TypeORMUserRepository implements IAuthRepository {
   private repoCompany: Repository<CompanyEntity> = AppDataSource.getRepository(CompanyEntity);
 
   async authenticate(data: Auth) {
-    const user = await this.repoUser.findOneBy({ Login: data.Login });
-
-    if (!user) {
-      throw new Error('Usuario no encontrado');
-    }
 
     const company = await this.repoCompany.findOneBy({ CompanyID: data.CompanyID });
 
     if (!company) {
       throw new Error('Empresa no encontrada');
+    }
+
+    const user = await this.repoUser.findOneBy({ Login: data.Login, CompanyID: data.CompanyID });
+
+    if (!user) {
+      throw new Error(`Usuario no encontrado para la Compañia ${company.Name}`);
     }
 
     const crypto = new CryptoLib();

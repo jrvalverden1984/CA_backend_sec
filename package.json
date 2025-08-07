@@ -14,7 +14,9 @@
     "migration:revert": "ts-node ./node_modules/typeorm/cli.js migration:revert -d src/Infrastructure/Database/data-source.ts"
   },
   "dependencies": {
+    "@types/cors": "^2.8.19",
     "@types/jsonwebtoken": "^9.0.10",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",

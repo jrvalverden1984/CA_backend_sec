@@ -1,6 +1,5 @@
 import { Logger } from './../../Shared/Utils/Logger';
 import { Request, Response, NextFunction } from 'express';
-import { AppDataSource } from '../../Infrastructure/Database/data-source';
 import { TypeORMUserRepository } from '../../Infrastructure/Repositories/TypeORMAuthRepository';
 import { GetAuth } from '../../Application/Authenticate/GetAuth';
 import { Auth } from '../../Domain/Authenticate/Auth';
@@ -9,10 +8,6 @@ import { BadRequestError } from '../../Shared/Errors/BadRequestError';
 import { UnauthorizedError } from '../../Shared/Errors/UnauthorizedError';
 
 const repo = new TypeORMUserRepository();
-
-AppDataSource.initialize().then(() => {
-  Logger.info('📦 TypeORM connected to PostgreSQL - AuthController');
-}).catch((error) => Logger.error('Error connecting to TypeORM:', error));
 
 export const authenticateHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {

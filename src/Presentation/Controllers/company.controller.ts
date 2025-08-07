@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express'
-import { AppDataSource } from '../../Infrastructure/Database/data-source'
 import { TypeORMCompanyRepository } from '../../Infrastructure/Repositories/TypeORMCompanyRepository'
 import { CreateCompany } from '../../Application/Company/CreateCompany'
 import { GetCompanyById } from '../../Application/Company/GetCompanyById'
@@ -13,10 +12,6 @@ import { NotFoundError } from '../../Shared/Errors/NotFoundError'
 import { Logger } from '../../Shared/Utils/Logger'
 
 const repo = new TypeORMCompanyRepository()
-
-AppDataSource.initialize().then(() => {
-  Logger.info('📦 TypeORM connected to PostgreSQL - CompanyController')
-}).catch((error) => Logger.error('Error connecting to TypeORM:', error))
 
 export const createCompanyHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {

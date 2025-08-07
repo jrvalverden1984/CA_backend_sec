@@ -1,6 +1,5 @@
 import { Logger } from './../../Shared/Utils/Logger';
 import { Request, Response, NextFunction } from 'express';
-import { AppDataSource } from '../../Infrastructure/Database/data-source';
 import { TypeORMUserRepository } from '../../Infrastructure/Repositories/TypeORMUserRepository';
 import { CreateUser } from '../../Application/User/CreateUser';
 import { GetUserById } from '../../Application/User/GetUserById';
@@ -12,10 +11,6 @@ import { BadRequestError } from '../../Shared/Errors/BadRequestError';
 import { NotFoundError } from '../../Shared/Errors/NotFoundError';
 
 const repo = new TypeORMUserRepository();
-
-AppDataSource.initialize().then(() => {
-  Logger.info('📦 TypeORM connected to PostgreSQL - UserController');
-}).catch((error) => Logger.error('Error connecting to TypeORM:', error));
 
 export const createUserHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
